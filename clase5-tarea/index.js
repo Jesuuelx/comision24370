@@ -6,34 +6,18 @@ class Mascoteria  {
         this.producto      = producto;
         this.medioPago     = medioPago;
         this.saldo         = saldo;
-
-
-
-
     }  
-
 
     recargaTuSaldo ( recarga ) {
         this.saldo = this.saldo + recarga;
     }
 
-
     pagoProducto ( valorProducto ) {
         if (( this.saldo > 0 ) && (valorProducto < this.saldo )) {
 
             this.saldo = this.saldo - valorProducto;
-
-
         }
-
-
-
     }
-
-    
-
-
-
 
 }
 
