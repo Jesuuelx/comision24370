@@ -1,11 +1,11 @@
-const seccion = document.querySelector('.seccion');
-const btnPerros = document.querySelector('.btn-perros');
-const btnGatos = document.querySelector('.btn-gatos');
-const form = document.querySelector('form');
-const carrito = document.querySelector('.nroCompras');
+const seccion = $('.seccion');
+const btnPerros = $('.btn-perros');
+const btnGatos = $('.btn-gatos');
+const form = $('form');
+const carrito = $('.nroCompras');
 let counter = 0;
 let p;
-const precioTotal = document.querySelector('.precioMas');
+const precioTotal = $('.precioMas');
 let nuevoStorageUno;
 let nuevoStorageDos;
 let acumulado = 0;
@@ -96,27 +96,21 @@ const crearHtmlDog = ( data ) => {
     for (let i = 0; i < perros.length; i++) {
 
 
-        const html = ` <p >${perros[i].title}</p>
+        const html = `<div class="card"><p >${perros[i].title}</p>
     <img src="../asets/${perros[i].alimento}.jpg" alt="">
     <p class="parrafo${i}">Precio:${perros[i].precio}$</p>
+    </div>
     `;
    
 
-    div = document.createElement('div');
-    div.innerHTML = html;
+    seccion.append(html);
 
-    seccion.append(div);
 
-    div.classList.add('card');
+$(`.parrafo${i}`).append(`<button class="boton${i}"> Agregar al Carrito</button>`);
 
-    p = document.querySelector(`.parrafo${i}`);
+    
 
-    const boton = document.createElement('button');
-    boton.innerText = 'Agregar al Carrito';
-
-    p.appendChild(boton);
-
-    boton.addEventListener('click', () => {
+    $(`.boton${i}`).click( () => {
         counter++;
         
         acumulado = acumulado + perros[i].precio; 
@@ -128,7 +122,7 @@ const crearHtmlDog = ( data ) => {
             precioTotal.innerText = `${(localStorage.getItem('cuenta')) ? localStorage.getItem('cuenta') : 0}$`;
             carrito.innerText = `${(localStorage.getItem('contador')) ? localStorage.getItem('contador') : 0};`
         
-        ; })        
+         })        
         
     } }
 
@@ -139,27 +133,18 @@ const crearHtmlDog = ( data ) => {
 
         for (let i = 0; i < gatos.length; i++) {
     
-            const html = ` <p >${gatos[i].title}</p>
+            const html = ` <div class="card"><p >${gatos[i].title}</p>
         <img src="../asets/${gatos[i].alimento}.jpg" alt="">
-        <p class="parrafo${i}">Precio : ${gatos[i].precio}$  </p>
+        <p class="parrafo${i}">Precio : ${gatos[i].precio}$  </p></div>
         `;
        
+        seccion.append(html);
     
-        div = document.createElement('div');
-        div.innerHTML = html;
-    
-        seccion.append(div);
-    
-        div.classList.add('card');
 
-        p = document.querySelector(`.parrafo${i}`);
+        $(`.parrafo${i}`).append(`<button class="boton${i}"> Agregar al Carrito</button>`);
     
-        const boton = document.createElement('button');
-        boton.innerText = 'Agregar al Carrito';
     
-        p.appendChild(boton);
-    
-        boton.addEventListener('click', () => {
+        $(`.boton${i}`).click( () => {
             counter++;
             carrito.innerText = `${counter};`
             acumulado = acumulado + gatos[i].precio; 
@@ -182,29 +167,29 @@ const crearHtmlDog = ( data ) => {
         precioTotal.innerText = `${localStorage.getItem('contador')}`
 
 
-btnPerros.addEventListener('click', () => {
+btnPerros.click( () => {
    
-    document.querySelector('.seccion').innerHTML = '';
+    $('.seccion').append('<div></div>') /* no se como limpiar */
     crearHtmlDog( perros );
 
 })
 
-btnGatos.addEventListener('click', () => {
+btnGatos.click( () => {
 
-    document.querySelector('.seccion').innerHTML = '';
+    $('.seccion').innerHTML = '';
     crearHtmlCat( gatos );
 })
 
-form.addEventListener('submit', (e) => {
+form.submit(function (e)  {
     e.preventDefault();
     let text = e.target.children[0].value;
     if (text.includes('alimentos perros')) {
 
-        document.querySelector('.seccion').innerHTML = '';
+        $('.seccion').innerHTML = '';
         crearHtmlDog( perros );
 
     } else if (text.includes('alimentos gatos')) {
-        document.querySelector('.seccion').innerHTML = '';    
+        $('.seccion').innerHTML = '';    
         crearHtmlCat(gatos);
     }
 
