@@ -132,8 +132,7 @@ const crearHtmlDog = ( data ) => {
         
     } }
 
- /*   carrito.innerText = `${localStorage.getItem('cuenta')}$`;
-   precioTotal.innerText = `${localStorage.getItem('contador')}` */
+
 
     const crearHtmlCat = ( data ) => {
 
@@ -159,27 +158,31 @@ const crearHtmlDog = ( data ) => {
     
         p.appendChild(boton);
     
-        boton.addEventListener('click', () => {
+       boton.addEventListener('click', () => {
             counter++;
             carrito.innerText = `${counter};`
             acumulado = acumulado + gatos[i].precio; 
-            carrito.innerText = `${counter};`
-            precioTotal.innerText = `${acumulado}$`; 
+             carrito.innerText = `${counter};`
+            precioTotal.innerText = `${acumulado}$`;  
 
             nuevoStorageUno = gatos[i];
             storage.push( nuevoStorageUno );
             localStorage.setItem('alimento', JSON.stringify( storage ))   
             localStorage.setItem('cuenta', acumulado);
             localStorage.setItem('contador', counter); 
+            precioTotal.innerText = `${(localStorage.getItem('cuenta')) ? localStorage.getItem('cuenta') : 0}$`;
+            carrito.innerText = `${(localStorage.getItem('contador')) ? localStorage.getItem('contador') : 0};`
             
         }
 
             )
-         
-        } }
         
-        carrito.innerText = `${localStorage.getItem('cuenta')}$`;
-        precioTotal.innerText = `${localStorage.getItem('contador')}`
+        } }
+
+       
+        
+        /* carrito.innerText = `${ (localStorage.getItem('cuenta')) ? localStorage.getItem('cuenta') : 0}$`;
+        precioTotal.innerText = `${(localStorage.getItem('contador')) ? localStorage.getItem('contador') : 0}` */
 
 
 btnPerros.addEventListener('click', () => {
@@ -210,6 +213,9 @@ form.addEventListener('submit', (e) => {
 
 
 })
+
+precioTotal.innerText = `${(localStorage.getItem('cuenta')) ? localStorage.getItem('cuenta') : 0}$`;
+carrito.innerText = `${(localStorage.getItem('contador')) ? localStorage.getItem('contador') : 0};` 
 
 
 
