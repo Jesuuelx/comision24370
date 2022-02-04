@@ -141,3 +141,43 @@ div p {
     margin-right: 10px;
   }
   
+  svg {
+      cursor: pointer;
+  }
+
+  .vacio {
+        cursor: pointer;
+  }
+
+  .mainMoscu {
+    width: 100%;
+    margin: 0px;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: flex-start;
+    
+    
+    
+    
+    
+    
+    
+    
+    }
+    
+    .moscuI {
+        width: 200px;
+        height: 200px;
+        margin: 0px;
+    }

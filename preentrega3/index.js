@@ -99,7 +99,7 @@ const crearHtmlDog = ( data ) => {
     for (let i = 0; i < perros.length; i++) {
 
         const html = `<div class="card"><p >${perros[i].title}</p>
-    <img src="../asets/${perros[i].alimento}.jpg" alt="">
+    <img class="img${i}" src="../asets/${perros[i].alimento}.jpg" alt="">
     <p class="parrafo${i}">Precio:${perros[i].precio}$</p>
     </div>
     `;
@@ -109,6 +109,11 @@ const crearHtmlDog = ( data ) => {
 $(`.parrafo${i}`).append(`<button class="boton${i}"> Agregar al Carrito</button>`);
 
     /*  CONTADOR Y LOCALSTORAGE */
+
+    $(`.card`).prepend(`<div id="div1" style="display:none">
+    <h3>¡Agregado al Carrito!</h3>
+    <h4>Con Exito!</h4>
+    </div>`)
 
     $(`.boton${i}`).click( () => {
         
@@ -127,6 +132,12 @@ $(`.parrafo${i}`).append(`<button class="boton${i}"> Agregar al Carrito</button>
             precioTotal.text(`${(localStorage.getItem('cuenta')) ? ( localStorage.getItem('cuenta') ) : 0}`);
             carrito.text(`${(localStorage.getItem('contador')) ? localStorage.getItem('contador') : 0}`) 
         
+    
+            $('#div1').fadeIn("slow" , function(){
+                //Cuando termina de ocultarse el elemento lo mostramos nuevamente
+                $("#div1").fadeOut(1000); })
+
+
          })        
         
     } }
@@ -138,7 +149,7 @@ $(`.parrafo${i}`).append(`<button class="boton${i}"> Agregar al Carrito</button>
         for (let i = 0; i < gatos.length; i++) {
     
             const html = ` <div class="card"><p >${gatos[i].title}</p>
-        <img src="../asets/${gatos[i].alimento}.jpg" alt="">
+        <img class="img${i}" src="../asets/${gatos[i].alimento}.jpg" alt="">
         <p class="parrafo${i}">Precio : ${gatos[i].precio}$  </p></div>
         `;
        
@@ -149,21 +160,17 @@ $(`.parrafo${i}`).append(`<button class="boton${i}"> Agregar al Carrito</button>
     
     /* CONTADOR Y LOCALSTORAGE */
         $(`.boton${i}`).click( () => {
-            localStorage.getItem('contador') != 0) ? counter = localStorage.getItem('contador') : counter = 0;
+            (localStorage.getItem('contador') != 0) ? counter = localStorage.getItem('contador') : counter = 0;
             (localStorage.getItem('cuenta') != 0 ) ? acumulado =  JSON.parse( localStorage.getItem('cuenta') )  : acumulado = 0;
             
             counter++;
-            carrito.innerText = `${counter};`
             acumulado = acumulado + gatos[i].precio; 
-            carrito.innerText = `${counter};`
-            precioTotal.innerText = `${acumulado}$`; 
-
             nuevoStorageUno = gatos[i];
             storage.push( nuevoStorageUno );
             localStorage.setItem('alimento', JSON.stringify( storage ))   
             localStorage.setItem('cuenta', acumulado);
             localStorage.setItem('contador', counter); 
-            precioTotal.text(`${(localStorage.getItem('cuenta')) ? localStorage.getItem('cuenta') : 0}`);
+            precioTotal.text(`${(localStorage.getItem('cuenta')) ? localStorage.getItem('cuenta') : 0}$`);
             carrito.text(`${(localStorage.getItem('contador')) ? localStorage.getItem('contador') : 0}`)
             
         }
@@ -172,7 +179,7 @@ $(`.parrafo${i}`).append(`<button class="boton${i}"> Agregar al Carrito</button>
          
         } }
         
-        precioTotal.text(`${(localStorage.getItem('cuenta')) ? localStorage.getItem('cuenta') : 0}`);
+        precioTotal.text(`${(localStorage.getItem('cuenta')) ? localStorage.getItem('cuenta') : 0}$`);
         carrito.text(`${(localStorage.getItem('contador')) ? localStorage.getItem('contador') : 0}`)
 
 /* TOCAR BOTON PERROS */
@@ -207,17 +214,39 @@ form.submit(function (e)  {
 })
 
 
-
-$(".miCuenta").click(() => {
-    $("body").append(`<div id="div1" style="height:120px"
-    style"width>
-    <h3>¡Hola Coder!</h3>
-    <h4>Sorpresa</h4>
-</div>`);
-                   /*  $("#div1").toggle("fast"); */
+/* boton de carrito */
 
 
-                } )
+$(`.dog`).prepend(`<div id="div2" style="display:none">
+<div><h3>Productos Total a Pagar: | </h3>
+<h4 class"cuenta"> ${localStorage.getItem('cuenta')}$</h4></div>
+<div><h3>Cantidad</h3>
+<h4 class"counter">${localStorage.getItem('contador')}</h4></div>    
+
+    </div>`)
+$('#div2').css("position", "absolute");
+ $('#div2').css("background-color", "yellow")
+ $('#div2').css("width", "50%")
+ $('#div2').css("border", "solid 2px black")
+   
+
+$('svg').click(() => {
+    $('#div2').toggle("fast")
+    $('cuenta').text();
+
+}) 
+
+/* vaciar carrito */
+
+$('.vacio').click(() => {
+    counter = 0;
+    acumulado = 0;
+    localStorage.setItem('cuenta', acumulado);
+    localStorage.setItem('contador', counter);
+    precioTotal.text(`${(localStorage.getItem('cuenta')) ? localStorage.getItem('cuenta') : 0}$`);
+        carrito.text(`${(localStorage.getItem('contador')) ? localStorage.getItem('contador') : 0}`)
+
+})
 
 
 

@@ -1,7 +1,13 @@
-// $('#app').append('<h1 id="title" class="text-4xl font-bold my-6 text-center" style="display: none">Hola Coders 🤙🏻</h1>')
-// $('#app').append('<button id="btn-down" class="mx-2 bg-red-500 px-4 py-2 rounded text-white">Haz Slide Down</button>')
+ $('#app').prepend('<h1 id="title" class="text-4xl font-bold my-6 text-center" style="display: none">Hola Coders 🤙🏻</h1>') 
+ /* $('#app').append('<button id="btn-down" class="mx-2 bg-red-500 px-4 py-2 rounded text-white">Haz Slide Down</button>') */
 // $('#app').append('<button id="btn-up" class="mx-2 bg-purple-500 px-4 py-2 rounded text-white">Haz Slide Up</button>')
-// $('#app').prepend('<button id="btn-toggle" class="mx-2 bg-green-500 px-4 py-2 rounded text-white">Haz Toggle</button>')
+$("#app").prepend(`<div id="div1" style="display:none">
+<h3>¡Hola Coder!</h3>
+<h4>Sorpresa</h4>
+</div>`)
+$('#app').append('<button id="btn-toggle" class="mx-2 bg-green-500 px-4 py-2 rounded text-white">Haz Toggle</button>')
+
+
 
 
 // $('h1').show();
@@ -12,17 +18,14 @@
 //     $('#app').show(1000);
 // });
 
-// $('#btn-down').click(function() {
-//     $('h1').slideDown("fast");
-// });
+/*  $('#btn-down').click(function() {
+     $('h1').slideDown("fast");
+ }); */
 
 // $('#btn-up').click(function() {
 //     $('h1').slideUp("fast");
 // });
 
-// $('#btn-toggle').click(function() {
-//     $('h1').fadeToggle("fast");
-// });
 
 
 // $('body').append(`<div>
@@ -74,8 +77,8 @@
 
 // 1. Insertar una imagen manipulando DOM y animarla utilizando animaciones encadenadas
 
-const URLImage = 'https://images.unsplash.com/photo-1642952867267-533b87bea300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80';
-
+/* const URLImage = 'https://images.unsplash.com/photo-1642952867267-533b87bea300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2071&q=80';
+ */
 // $('body').append(`<img id="img-manipulate" src="${URLImage}" alt="Flowers" width="350px" height="350">`)
 // $('#img-manipulate').fadeOut(1000).fadeIn(1000).fadeOut(1000).fadeIn(1000).fadeOut(1000).fadeIn(1000);
 
@@ -155,36 +158,53 @@ const URLImage = 'https://images.unsplash.com/photo-1642952867267-533b87bea300?i
 
 // 5. Hacer un cronometro utilizando el DOM y animaciones
 
-$('body').append(`
-    <div id="reloj"></div>
-    <button class="px-3 py-1 rounded bg-red-500 text-white uppercase font-bold text-xl" id="btnStop">Detener</button>
-`)
+$('#btn-toggle').click(function() {
+    $('#div1').fadeIn("slow" , function(){
+       //Cuando termina de ocultarse el elemento lo mostramos nuevamente
+       $("#div1").fadeOut(1000); 
+
+      
+}) });
 
 
-let inicio = 0;
-let stop = false;
+const productos = [{ id: 1,  nombre: "Arroz", precio: 125 },
+{  id: 2,  nombre: "Fideo", precio: 70 },
+{  id: 3,  nombre: "Pan"  , precio: 50},
+{  id: 4,  nombre: "Flan" , precio: 100}];
+// Asociamos el evento click en ready luego del DOM Generado
+$(document).ready(function () {
+    $(".btnComprar").click(function (e) { 
+        //Obtenemos hijos del padre <div> desde el target
+        let hijos = $(e.target).parent().children();
+        //Primer input, valor de ID oculto
+        console.log(hijos[0].value);
+        //Animaciòn de respuesta de compra
+        $(e.target).parent().slideUp("slow");
+    });
+});
+// Recorremos el array con for..of
+for (const producto of productos) {
+    //Por cada producto ademas de los datos agregamos un botón 
+    $("#app").append(`<div>
+                        <input value="${producto.id}" type="hidden">
+                        <h4>  Producto: ${producto.nombre}</h4>
+                        <b> $ ${producto.precio}</b>
+                        <button class="btnComprar">Comprar</button>
+                    </div>`); }
 
-function cronometro(selector) {
-    $(selector)
-        .delay(500)
-            .fadeOut(200)
-                .html(inicio)
-                    .fadeIn(200, () => {
-                        if(!stop) {
-                            inicio++;
-                            cronometro(selector);
-                        }
-                    })
-}
 
-$('#btnStop').click(function(e) {
-    stop = !stop
-    if(stop) {
-        $(e.target).html('Reanudar')
-    } else {
-        $(e.target).html('Detener')
-        cronometro('#reloj');
-    }
-})
-
-cronometro('#reloj');
+                    $("body").prepend(`</div>
+                        <a>Ir a contacto</a>
+                        <p style="height: 800px"></p>
+                        <section id="seccionContacto">
+                           <h4>¡Somos Coders!</h4>
+                        </section>
+                   </div>`);
+// Asociamos la animación al click en un elemento <a>
+$('a').click( function(e) { 
+    e.preventDefault();
+    //Animamos sus propiedades CSS con animate
+    $('html, body').animate({
+        scrollTop: $("#seccionContacto").offset().top  
+    }, 2000);
+} );
