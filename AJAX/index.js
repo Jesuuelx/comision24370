@@ -113,7 +113,7 @@ const URLPotter = 'http://hp-api.herokuapp.com/api/characters/students'
 
 
 // 4. utilizar API de harry potter y listar elementos y seleccionar con una salida
-const jokeUrl = 'https://api.chucknorris.io/jokes/random';
+
 /* let estudiantes = []
 $.get(URLPotter, function(response, status) {
     if(status === 'success') {
@@ -129,33 +129,51 @@ $.get(URLPotter, function(response, status) {
     }
 }) */
 
+const jokeUrl = 'https://api.chucknorris.io/jokes/random';
 
-$.get(jokeUrl, function(response, status) {
-    if(status === 'success') {
-        console.log(response.icon_url);
-        console.log(response.id);
-        console.log(response.value);
+const crearHtml = function() { $('#app').append(`<h1 class="mt-5">Chistes</h1>
+<hr>
+<button class="btn"> <a href="#"> Otro Chiste +...</a></button>
+<ol class="mt-2 list-group">
+  
+</ol>`)};
 
-        $('#app').append(`<h1 class="mt-5">Chistes</h1>
-        <hr>
-        <button class="btn">Otro Chiste +...</button>
-        <ol class="mt-2 list-group">
-          
-        </ol>
-        <img src="${response.icon_url}" />`)
-        
         $('.btn').click(function(){
-            $('ol').html('')
-            $('ol').append(`<li>${response.value}</li>`)
-        } )
+          
+  const obtenerChiste = function() {    
+            $.get(jokeUrl, function(response, status) {
+                if(status === 'success') {
+                    console.log(response.icon_url);
+                    console.log(response.id);
+                    console.log(response.value); }
+                  
+                }) }
+                  
+                    
+                
+                
+          const events = function(){     
+            $('.btn').click(function(){ 
+                
+                $('.btn').disabled = true;
+                $('ol').html('')
+                dibujarChiste( obtenerChiste );
+
+                $('.btn').disabled = false;
+
+                    }
+            )}
         
+            const dibujarChiste = function( chiste ){
+                $('ol').append(`<li>${response.value}</li> <img src="${response.icon_url}" />`)
+            }
+
+            crearHtml();
+            events()
 
         
         
-    }
-
-})
-
+  
 
 
 
