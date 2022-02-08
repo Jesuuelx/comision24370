@@ -13,9 +13,10 @@ let nuevoStorageDos;
 let acumulado = 0;
 let storage = [];
 let cuentaStorage = [];
+const productos = './productos.json';
 
 /* BASE DE DATOS */
-let perros = [
+/* let perros = [
     { alimento:'hills',
       precio:100,
       title:'Hills'  
@@ -69,7 +70,7 @@ let perros = [
 
 }
 
-]
+] */
 
 let gatos = [
     { alimento:'hillsg',
@@ -91,20 +92,27 @@ let gatos = [
 
 ]
 
-console.log(perros[1].title)
+/* console.log(perros[1].title) */
 
 /* CREAR HTML EN BOTON PERROS */
-const crearHtmlDog = ( data ) => {
+const crearHtmlDog = (  ) => {
 
-    for (let i = 0; i < perros.length; i++) {
+      /* AJAX */
+    $.get(productos, function(response, status) {
+        if(status === 'success') {
+    
+     for (let i = 0; i < productos.length; i++) {
+               
 
-        const html = `<div class="card"><p >${perros[i].title}</p>
-    <img class="img${i}" src="../asets/${perros[i].alimento}.jpg" alt="">
-    <p class="parrafo${i}">Precio:${perros[i].precio}$</p>
+        const html = `<div class="card"><p>${response[i].name}</p>
+    <img class="img${i}" src="${response[i].url}" alt="">
+    <p class="parrafo${i}">Precio:${response[i].precio}$</p>
     </div>
     `;
    
     seccion.append(html);
+
+
 
 $(`.parrafo${i}`).append(`<button class="boton${i}"> Agregar al Carrito</button>`);
 
@@ -123,13 +131,13 @@ $(`.parrafo${i}`).append(`<button class="boton${i}"> Agregar al Carrito</button>
             console.log(typeof acumulado);
          /*    ( (JSON.parse(localStorage.getItem('alimento'))).length > 0) ? storage = localStorage.getItem('alimento') : storage = [];  */
             counter++;
-            acumulado =  perros[i].precio + acumulado   ; 
-            nuevoStorageUno = perros[i];
+            acumulado =  response[i].precio + acumulado   ; 
+            nuevoStorageUno = response[i];
             storage.push( nuevoStorageUno );
             localStorage.setItem('alimento', JSON.stringify( storage ));
             localStorage.setItem('cuenta', acumulado);
             localStorage.setItem('contador', counter); 
-            precioTotal.text(`${(localStorage.getItem('cuenta')) ? ( localStorage.getItem('cuenta') ) : 0}`);
+            precioTotal.text(`${(localStorage.getItem('cuenta')) ? ( localStorage.getItem('cuenta') ) : 0}$`);
             carrito.text(`${(localStorage.getItem('contador')) ? localStorage.getItem('contador') : 0}`) 
         
     
@@ -140,7 +148,7 @@ $(`.parrafo${i}`).append(`<button class="boton${i}"> Agregar al Carrito</button>
 
          })        
         
-    } }
+    }}}  )}
 
    /* CREAR HTML BOTON GATOS */
 
@@ -186,7 +194,7 @@ $(`.parrafo${i}`).append(`<button class="boton${i}"> Agregar al Carrito</button>
 btnPerros.click( () => {
    
     $('.seccion').html('') 
-    crearHtmlDog( perros );
+    crearHtmlDog(  );
 
 })
 /* TOCAR BOTON GATOS */
@@ -203,7 +211,7 @@ form.submit(function (e)  {
     if (text.includes('alimentos perros')) {
 
         $('.seccion').html('')
-        crearHtmlDog( perros );
+        crearHtmlDog(  );
 
     } else if (text.includes('alimentos gatos')) {
         $('.seccion').html('');    
@@ -219,9 +227,9 @@ form.submit(function (e)  {
 
 $(`.dog`).prepend(`<div id="div2" style="display:none">
 <div><h3>Productos Total a Pagar: | </h3>
-<h4 class"cuenta"> ${localStorage.getItem('cuenta')}$</h4></div>
+<h4 class"cuenta"> ${(localStorage.getItem('cuenta')) ? localStorage.getItem('cuenta') : 0 }$</h4></div>
 <div><h3>Cantidad</h3>
-<h4 class"counter">${localStorage.getItem('contador')}</h4></div>    
+<h4 class"counter">${(localStorage.getItem('contador')) ? localStorage.getItem('contador') : 0}</h4></div>    
 
     </div>`)
 $('#div2').css("position", "absolute");
