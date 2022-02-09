@@ -13,7 +13,7 @@ let nuevoStorageDos;
 let acumulado = 0;
 let storage = [];
 let cuentaStorage = [];
-const productos = './productos.json';
+const productos = 'productos.json';
 
 /* BASE DE DATOS */
 /* let perros = [
@@ -101,7 +101,7 @@ const crearHtmlDog = (  ) => {
     $.get(productos, function(response, status) {
         if(status === 'success') {
     
-     for (let i = 0; i < productos.length; i++) {
+     for (let i = 0; i < response.length; i++) {
                
 
         const html = `<div class="card"><p>${response[i].name}</p>
